@@ -19,7 +19,7 @@ func openManyConnections() {
 		select {
 		case <-t.C:
 			log.Println("openManyConnections done")
-			log.Println("Trigger a full garbage collection cycle")
+			// log.Println("Trigger a full garbage collection cycle")
 			return
 		default:
 			ch <- struct{}{}
