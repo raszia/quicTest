@@ -6,6 +6,8 @@ import (
 	"net/http/pprof"
 )
 
+var pprofAddr = "localhost:9911"
+
 func pprofInit() {
 	// Create a new ServeMux
 	mux := http.NewServeMux()
@@ -18,5 +20,5 @@ func pprofInit() {
 	mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
 
 	// Start your server using the custom ServeMux
-	log.Fatal(http.ListenAndServe(":9911", mux))
+	log.Fatal(http.ListenAndServe(pprofAddr, mux))
 }
