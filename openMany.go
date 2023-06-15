@@ -11,7 +11,7 @@ import (
 
 func openManyConnections() {
 	time.Sleep(time.Second * 3)
-	ch := make(chan struct{}, 5)
+	ch := make(chan struct{}, 50)
 	t := time.NewTicker(20 * time.Second)
 	defer t.Stop()
 

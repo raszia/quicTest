@@ -152,18 +152,22 @@ func (request *requestStruct) Send() *responseStruct {
 
 func (request *requestStruct) SendWithContext(ctx context.Context) *responseStruct {
 
-	client := &http.Client{
-		Transport: &http3.RoundTripper{
+	rt := &http3.RoundTripper{
 
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			},
-			QuicConfig: &quic.Config{
-				EnableDatagrams: true,
-			},
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
+		QuicConfig: &quic.Config{
 			EnableDatagrams: true,
 		},
-		Timeout: request.timeout,
+		EnableDatagrams: true,
+	}
+
+	defer rt.Close()
+
+	client := &http.Client{
+		Transport: rt,
+		Timeout:   request.timeout,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error { //disable redirect follow
 			return http.ErrUseLastResponse
 		},
